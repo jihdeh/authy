@@ -72,7 +72,7 @@ const submitForm = props => async event => {
 				});
 			if(response.data && response.status) {
 				const path = `${window.location.protocol}//${window.location.host}/success`;
-		    browserHistory.push(path)
+		    browserHistory.push(path);
 			}
 		} catch(err) {
 			props.onSubmit("Registration not successful, please try a different email");

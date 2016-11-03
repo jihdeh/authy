@@ -12,6 +12,7 @@ import {
 import RegisterForm from "../../register/component/register";
 import axios from "axios";
 import {Button, Row} from "react-materialize";
+import {browserHistory} from "react-router";
 
 
 const mapStateToProps = (state, props) => ({
@@ -29,7 +30,8 @@ class HomeView extends Component {
 	onLogout = async () => {
 		const response = await axios.delete("/api/login/session");
 		if(response.status === 200) {
-			window.location = "/login";
+			const path = `${window.location.protocol}//${window.location.host}/login`;
+	    browserHistory.push(path);
 		}
 	}
 	render() {
