@@ -21,9 +21,10 @@ module.exports = {
     app: ["babel-polyfill", "./app/client.js"]
   },
   output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js",
-  },
+		path: path.join(__dirname, "dist"),
+		filename: "js/[id]-[chunkhash].js",
+		chunkFilename: "js/[id]-[chunkhash].js"
+	},
   module: {
     preLoaders: [
       { test: /\.json$/, loader: "json" },
@@ -47,7 +48,7 @@ module.exports = {
     })
   ] : []).concat([
     new CleanWebpackPlugin([path.join("dist", "js")]),
-    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 2 }),
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 15 }),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
