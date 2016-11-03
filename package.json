@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tools/start",
+    "start": "node server/index.js",
     "dev": "WEB_CONCURRENCY=1 nodemon --ignore dist -d 2 server/index.js & npm run watch",
     "build": "echo Build mode: ${NODE_ENV:-develop} && rm -R -f dist && mkdir -p dist && npm run app",
     "app": "webpack",
