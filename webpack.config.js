@@ -32,30 +32,34 @@ module.exports = {
       test: /\.js$/,
       loaders: loaders,
       exclude: /node_modules/
+    }, {
+      test: /\.(jpg|png)$/,
+      loader: 'file?name=[path][name].[hash].[ext]',
+      include: path.join(__dirname, "images")
     }]
   },
   plugins: (process.env.NODE_ENV === "production" ? [
-		new webpack.optimize.DedupePlugin({
-    'process.env': {
-      'NODE_ENV': JSON.stringify('production')
-    }
-  }),
-		new webpack.optimize.UglifyJsPlugin({
-			compress: {
-				warnings: false
-			}
-		})
-	] : []).concat([
-		new CleanWebpackPlugin([path.join("dist", "js")]),
-		new webpack.optimize.LimitChunkCountPlugin({maxChunks: 2}),
+    new webpack.optimize.DedupePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ] : []).concat([
+    new CleanWebpackPlugin([path.join("dist", "js")]),
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 2 }),
 
-		// Emit a file with assets paths
-		// https://github.com/sporto/assets-webpack-plugin#options
-		new AssetsPlugin({
-			path: path.resolve(__dirname, "dist", "js"),
-			filename: "chunks.json",
-			processOutput: x => JSON.stringify(x)
-		}),
-		new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ar/)
-	])
+    // Emit a file with assets paths
+    // https://github.com/sporto/assets-webpack-plugin#options
+    new AssetsPlugin({
+      path: path.resolve(__dirname, "dist", "js"),
+      filename: "chunks.json",
+      processOutput: x => JSON.stringify(x)
+    }),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /ar/)
+  ])
 };

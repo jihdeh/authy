@@ -61,11 +61,12 @@ User.methods.sendOneTouch = function(cb) {
   var self = this;
   self.authyStatus = "unverified";
   self.save();
-
+  console.log("SENDONETOU")
   onetouch.send_approval_request(self.authyId, {
     message: "Request to Login to JadoPado Authy app",
     email: self.email
   }, function(err, authyres) {
+  	console.log(err, authyres, "======");
     if (err && err.success != undefined) {
       authyres = err;
       err = null;

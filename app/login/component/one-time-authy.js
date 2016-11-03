@@ -13,10 +13,8 @@ const submitForm = props => async event => {
 	event.preventDefault();
 		try {
 			const response = await axios.post("api/login/session/verify", {code: props.code});
-			console.log(response)
 			if(response.data && response.status === 200) {
 				window.location = `${window.location.protocol}//${window.location.host}`;
-			// 	// console.log(`${window.location.protocol}//${window.location.host}`)
 			}
 		} catch(err) {
 			props.onSubmit("Error Occured / Invalid Token");
