@@ -39,11 +39,7 @@ module.exports = {
     }]
   },
   plugins: (process.env.NODE_ENV === "production" ? [
-    new webpack.optimize.DedupePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
-    }),
+    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -52,7 +48,11 @@ module.exports = {
   ] : []).concat([
     new CleanWebpackPlugin([path.join("dist", "js")]),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 2 }),
-
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    }),
     // Emit a file with assets paths
     // https://github.com/sporto/assets-webpack-plugin#options
     new AssetsPlugin({

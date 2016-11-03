@@ -8,10 +8,13 @@ var error = require('./response_utils').error;
 function* create(next) {
   let email = this.request.body.email;
   let candidatePassword = this.request.body.password;
-  const user = new Promise(resolve => User
+
+  const user = new Promise((resolve, reject) => User
     .findOne({ email: email })
     .exec((err, user) =>
-      resolve({ user, match: user.comparePassword(candidatePassword) })
+
+    	user ? resolve({ user, match: user.comparePassword(candidatePassword) }) : 
+      	reject("User not found")
     ));
   const userResult = yield user;
   if (!userResult || !userResult.match) {
@@ -45,7 +48,7 @@ function* create(next) {
 function invalid() {
   // this.status = 403;
   try {
-  	error(response, 403, 'Invalid username/password combination.');
+  	error("response", 403, 'Invalid username/password combination.');
   }
   catch(error) {
   	console.trace(error);
