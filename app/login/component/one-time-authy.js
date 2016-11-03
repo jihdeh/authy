@@ -41,6 +41,10 @@ const OneTimeAuthy = enhance(({
 }) => {
 	return (
 		<div>
+			<p>
+    		We've sent you a one-time password to verify your posession of a mobile
+    		phone tied to this account. Can you enter the code sent?
+			</p>
 			<form onSubmit={submitForm}>
 				<Row>
 			    <Input type="number" value={code} label="Code" s={12}  onChange={evt => onEnterAuthyCode(evt.target.value)} />
