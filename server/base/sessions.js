@@ -131,13 +131,13 @@ function* verify() {
         user.confirmed = true;
         user.authyStatus = "approved";
         user.save();
-        return resolve({ token: this.request.session.token, status: 200 });
+        return resolve({ token: this.request.session.token, status: 200, uuid: user.uuid });
       });
     }));
   const result = yield user.then(res => res).catch(error => error);
   console.log(result, "verify")
   if(result.status === 200) {
-  	 const signedToken = jwtUtils.sign(result.user.uuid);
+  	 const signedToken = jwtUtils.sign(result.uuid);
       jwtUtils.store(this, signedToken);
   }
   this.status = result.status
