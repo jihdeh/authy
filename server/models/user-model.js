@@ -61,12 +61,10 @@ User.methods.sendOneTouch = function(cb) {
   var self = this;
   self.authyStatus = "unverified";
   self.save();
-  console.log("SENDONETOU")
   onetouch.send_approval_request(self.authyId, {
     message: "Request to Login to JadoPado Authy app",
     email: self.email
   }, function(err, authyres) {
-  	console.log(err, authyres, "======");
     if (err && err.success != undefined) {
       authyres = err;
       err = null;
@@ -80,8 +78,6 @@ User.methods.sendAuthyToken = function(cb) {
   var self = this;
 
   authy.request_sms(self.authyId, function(err, response) {
-  	console.log("SENDSMSAUTHY", err, response);
-
     cb.call(self, err);
   });
 };
@@ -90,7 +86,6 @@ User.methods.sendAuthyToken = function(cb) {
 User.methods.verifyAuthyToken = function(otp, cb) {
   var self = this;
   authy.verify(self.authyId, otp, function(err, response) {
-  	console.log("VERIFY", err, response);
     cb.call(self, err, response);
   });
 };
