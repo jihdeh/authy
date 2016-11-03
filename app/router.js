@@ -10,6 +10,7 @@ import {
 import LoginComponent from "./login/component/login";
 import VerifyComponent from "./login/component/one-time-authy";
 import RegisterComponent from "./register/component/register";
+import SuccessComponent from "./register/component/successful-registration";
 
 class NoMatch extends React.Component {
   render() {
@@ -40,6 +41,9 @@ const JadoPadoRouter = ({
 	        <Route 
 	        	path="register"
 	        	component={RegisterComponent}/>
+	        <Route 
+	        	path="success"
+	        	component={SuccessComponent}/>
 		      <Route path="*" component={NoMatch} />
 	    </Route>
 	  </Router>

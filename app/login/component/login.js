@@ -8,7 +8,7 @@ import {Row, Col, Input, Button} from "react-materialize";
 import withState from "recompose/withState";
 import withHandlers from "recompose/withHandlers";
 import axios from "axios";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 
 const submitForm = props => async event => {
 	event.preventDefault();

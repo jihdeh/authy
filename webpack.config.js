@@ -6,6 +6,7 @@ const fs = require("fs");
 const AssetsPlugin = require("assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
+
 var devtool, loaders;
 if (process.env.NODE_ENV === "development") {
   loaders = ["react-hot-loader/webpack", "babel-loader", "babel"];
@@ -21,23 +22,36 @@ module.exports = {
     app: ["babel-polyfill", "./app/client.js"]
   },
   output: {
-		path: path.join(__dirname, "dist"),
-		filename: "js/[id]-[chunkhash].js",
-		chunkFilename: "js/[id]-[chunkhash].js"
-	},
+    path: path.join(__dirname, "dist"),
+    filename: "js/[id]-[chunkhash].js",
+    chunkFilename: "js/[id]-[chunkhash].js"
+  },
   module: {
     preLoaders: [
       { test: /\.json$/, loader: "json" },
     ],
     loaders: [{
-      test: /\.js$/,
-      loaders: loaders,
-      exclude: /node_modules/
-    }, {
-      test: /\.(jpg|png)$/,
-      loader: 'file?name=[path][name].[hash].[ext]',
-      include: path.join(__dirname, "images")
-    }]
+        test: /\.js$/,
+        loaders: loaders,
+        exclude: /node_modules/
+      }, {
+        test: /\.scss/,
+        loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
+      }, {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader'
+      }, {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image-webpack?{progressive:true, optimizationLevel: 3, interlaced: false, pngquant:{quality: "30-40", speed: 1}}'
+        ]
+      }]
+      // , {
+      //   test: /\.(jpg|png)$/,
+      //   loader: 'file?name=[path][name].[hash].[ext]',
+      //   include: path.join(__dirname, "images")
+      // },
   },
   plugins: (process.env.NODE_ENV === "production" ? [
     new webpack.optimize.DedupePlugin(),

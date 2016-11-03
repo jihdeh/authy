@@ -44,6 +44,10 @@ export default function Frontend() {
     this.body = renderApp(this, "Login", {});
   });
 
+  router.get("/success", sessionMiddleton, function*() {
+    this.body = renderApp(this, "Successful Registration", {});
+  });
+
   router.get("/verify", function*() {
     this.body = renderApp(this, "Verify", {});
   });

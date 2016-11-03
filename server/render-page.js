@@ -11,9 +11,6 @@ export default function renderPage(title, appMarkup, appSrc) {
 			  <meta name="author" content="">
 			  <title>${title || "JadoPado"}</title>
 			  <!-- Custom Fonts -->
-			      <link href="https://www.authy.com/form.authy.min.css" 
-        media="screen" rel="stylesheet" type="text/css">
-    		<script src="https://www.authy.com/form.authy.min.js" type="text/javascript"></script>
 			  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 			  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
 			</head>
