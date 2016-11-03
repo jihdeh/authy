@@ -80,6 +80,8 @@ User.methods.sendAuthyToken = function(cb) {
   var self = this;
 
   authy.request_sms(self.authyId, function(err, response) {
+  	console.log("SENDSMSAUTHY", err, response);
+
     cb.call(self, err);
   });
 };
@@ -88,6 +90,7 @@ User.methods.sendAuthyToken = function(cb) {
 User.methods.verifyAuthyToken = function(otp, cb) {
   var self = this;
   authy.verify(self.authyId, otp, function(err, response) {
+  	console.log("VERIFY", err, response);
     cb.call(self, err, response);
   });
 };
