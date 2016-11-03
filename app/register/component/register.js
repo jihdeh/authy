@@ -10,14 +10,14 @@ import {Row, Col, Input, Button} from "react-materialize";
 import axios from "axios";
 import validator from "validator";
 import {Link, browserHistory} from "react-router";
-import IntlTelInput from 'react-intl-tel-input';
-import 'react-intl-tel-input/dist/libphonenumber.js';
-import 'react-intl-tel-input/dist/main.css';
+import IntlTelInput from "react-intl-tel-input";
+import "react-intl-tel-input/dist/libphonenumber.js";
+import "react-intl-tel-input/dist/main.css";
 
 const loadJSONP = (url, callback) => {
-  const ref = window.document.getElementsByTagName('script')[0];
-  const script = window.document.createElement('script');
-  script.src = `${url + (url.indexOf('?') + 1 ? '&' : '?')}callback=${callback}`;
+  const ref = window.document.getElementsByTagName("script")[0];
+  const script = window.document.createElement("script");
+  script.src = `${url + (url.indexOf("?") + 1 ? "&" : "?")}callback=${callback}`;
   ref.parentNode.insertBefore(script, ref);
   script.onload = () => {
     script.remove();
@@ -25,9 +25,9 @@ const loadJSONP = (url, callback) => {
 };
 
 const lookup = (callback) => {
-  loadJSONP('http://ipinfo.io', 'sendBack');
+  loadJSONP("//ipinfo.io", "sendBack");
   window.sendBack = (resp) => {
-    const countryCode = (resp && resp.country) ? resp.country : '';
+    const countryCode = (resp && resp.country) ? resp.country : "";
     callback(countryCode);
   }
 };
@@ -142,13 +142,13 @@ const Register = enhance(({
 			    <Input s={12} label="Name" value={username} onChange={evt => changeUsername(evt.target.value)}/>
 			    <p style={{color: "red"}}>{usernameError}</p>
   				<IntlTelInput onPhoneNumberChange={handleNumber}
-											defaultCountry={'auto'}
+											defaultCountry={"auto"}
                       geoIpLookup={lookup}
                       onPhoneNumberBlur={handleNumber}
                       separateDialCode={true}
-                      css={['intl-tel-input', 'form-control']}
-                      utilsScript={'libphonenumber.js'} />
-          <p>{displayUserNumber}</p>
+                      css={["intl-tel-input", "form-control"]}
+                      utilsScript={"libphonenumber.js"} />
+          <p>{displayUserNumber || "000-000-0000"}</p>
 			    <p style={{color: "red"}}>{numberError}</p>
 			    <Input type="email" value={email} label="Email" s={12}  onChange={evt => changeEmail(evt.target.value)} />
 			    <p style={{color: "red"}}>{emailError}</p>

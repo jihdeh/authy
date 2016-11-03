@@ -31,6 +31,7 @@ const JadoPadoRouter = ({
 	    <Route path="/" component={App}>
 	      <IndexRoute
 	        component={HomeView}
+	        onEnter={() => dispatch(fetchUserApi())}
 	        />
 	        <Route
 	        	path="login"
