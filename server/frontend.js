@@ -48,7 +48,7 @@ export default function Frontend() {
   });
 
   return server
-	  // .use(staticCache({ maxage: 60 * 1000 })) // Cache all pages for 1 minute
+	  .use(staticCache({ maxage: 60 * 100000 })) // Cache all pages for 1 hour
     .use(serve(path.join(__dirname, "../static")))
     .use(serve(path.join(__dirname, "../dist")))
     .use(router.routes())
