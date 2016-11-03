@@ -10,6 +10,7 @@ import {Row, Col, Input, Button} from "react-materialize";
 import axios from "axios";
 import validator from "validator";
 import ReactTelInput from "react-telephone-input";
+import {Link} from "react-router";
 
 const changeUsername = props => (value) => {
 // onEnterName
@@ -133,6 +134,7 @@ const Register = enhance(({
 			    <p>{submitMessage}</p>
 				</Row>
 			</form>
+			<Link to="/login">Login</Link>
 		</div>
 	)
 });

@@ -8,6 +8,7 @@ import koaRouter from "koa-router";
 import renderApp from "./render-app";
 import jwtUtils from "./jwt-utils";
 import User from "./models/user-model";
+import sessionMiddleton from "./base/session-middleware";
 
 export default function Frontend() {
   const server = koa();
@@ -35,20 +36,20 @@ export default function Frontend() {
     this.body = renderApp(this, "homepage", data);
   });
 
-  router.get("/register", function*() {
+  router.get("/register", sessionMiddleton, function*() {
     this.body = renderApp(this, "Register", {});
   });
 
-  router.get("/login", function*() {
+  router.get("/login", sessionMiddleton, function*() {
     this.body = renderApp(this, "Login", {});
   });
-  
+
   router.get("/verify", function*() {
     this.body = renderApp(this, "Verify", {});
   });
 
   return server
-	  .use(staticCache({ maxage: 60 * 100000 })) // Cache all pages for 1 hour
+    .use(staticCache({ maxage: 60 * 100000 })) // Cache all pages for 1 hour
     .use(serve(path.join(__dirname, "../static")))
     .use(serve(path.join(__dirname, "../dist")))
     .use(router.routes())

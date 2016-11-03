@@ -7,6 +7,7 @@ import setDisplayName from "recompose/setDisplayName";
 import {Row, Col, Input, Button} from "react-materialize";
 import withState from "recompose/withState";
 import withHandlers from "recompose/withHandlers";
+import {Link} from "react-router";
 import axios from "axios";
 
 const submitForm = props => async event => {
@@ -47,6 +48,7 @@ const OneTimeAuthy = enhance(({
 			    <p>{submitMessage}</p>
 				</Row>
 			</form>
+			<Link to="/login">Go back to Login</Link>
 		</div>
 	)
 });
