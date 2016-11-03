@@ -18,7 +18,7 @@ class App extends React.Component {
 		}
     return (
       <div id="app">
-        {typeof document === "undefined" ? <Preloader flashing size="big"/> : this.props.children }
+        {this.props.children }
       </div>
     );
   }

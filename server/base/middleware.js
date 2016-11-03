@@ -14,7 +14,7 @@ function* loadUser(next) {
   this.request.session = session;
   this.cookies.set("session", JSON.stringify(session));
   if (session) {
-    const user = yield User.findById(session.userId).select("username email authyStatus authyId").lean().exec();
+    const user = yield User.findById(session.userId).select("username email authyStatus authyId uuid").lean().exec();
     if (user) {
       this.request.user = user
       this.cookies.set("user", JSON.stringify(user));

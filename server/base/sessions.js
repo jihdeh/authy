@@ -15,8 +15,6 @@ function* create(next) {
     	user ? resolve({ user, match: user.comparePassword(candidatePassword) }) : 
       	reject(err)
     ));
-
-  console.log(yield user)
   const userResult = yield user;
   if (!userResult || !userResult.match) {
     return invalid();
@@ -99,6 +97,7 @@ function* authyCallback() {
 // Internal endpoint for checking the status of OneTouch
 function* authyStatus(next) {
   let status = (this.request.user) ? this.request.user.authyStatus : "unverified";
+  console.log(this.request.user)
   if (status == "approved") {
     this.request.session.confirmed = true;
     const signedToken = jwtUtils.sign(this.request.user.uuid);
@@ -136,6 +135,7 @@ function* verify() {
       });
     }));
   const result = yield user.then(res => res).catch(error => error);
+  console.log(result, "verify")
   if(result.status === 200) {
   	 const signedToken = jwtUtils.sign(result.user.uuid);
       jwtUtils.store(this, signedToken);
