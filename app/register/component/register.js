@@ -37,7 +37,7 @@ const changeNumber = props => (value) => {
 const changeCode = props => (value) => {
 	const userCode = !validator.isEmpty(value.trim());
 	props.onEnterCountryCode(value);
-	return !userCode ? props.onCodeError("Please enter password") : props.onCodeError(null);
+	return !userCode ? props.onCodeError("Please enter a valid country code") : props.onCodeError(null);
 };
 
 const submitForm = props => async event => {
@@ -45,20 +45,20 @@ const submitForm = props => async event => {
 	if(props.emailError || props.usernameError || props.passwordError) {
 		props.onSubmit("Cannot register due to errors in form, please rectify");
 	} else {
-		// try {
-		// 	const response = await axios.post("api/register", {
-		// 			username: props.username,
-		// 			email: props.email,
-		// 			countryCode: props.countryCode,
-		// 			phoneNumber: props.phoneNumber,
-		// 			password: props.password
-		// 		});
-		// 	if(response.data && response.status) {
-		// 		window.location = `${window.location.protocol}//${window.location.host}/login`;
-		// 	}
-		// } catch(err) {
-		// 	props.onSubmit("Registration not successful, please try a different email");
-		// };
+		try {
+			const response = await axios.post("api/register", {
+					username: props.username,
+					email: props.email,
+					countryCode: props.countryCode,
+					phoneNumber: props.phoneNumber,
+					password: props.password
+				});
+			if(response.data && response.status) {
+				window.location = `${window.location.protocol}//${window.location.host}/login`;
+			}
+		} catch(err) {
+			props.onSubmit("Registration not successful, please try a different email");
+		};
 	}
 }
 
@@ -126,10 +126,10 @@ const Register = enhance(({
 			    <Input s={12} label="Name" value={username} onChange={evt => changeUsername(evt.target.value)}/>
 			    <p style={{color: "red"}}>{usernameError}</p>
 
-			    <Input s={4} label="Country Code" value={countryCode} max="3" onChange={evt => changeCode(evt.target.value)}/>
-			    <p style={{color: "red"}}>{codeError}</p>
-			    <Input s={8} label="Phone Number" value={phoneNumber} onChange={evt => changeNumber(evt.target.value)}/>
+			    <Input s={4} type="number" label="Country Code" value={countryCode} max="3" onChange={evt => changeCode(evt.target.value)}/>
+			    <Input s={8} label="Phone Number" type="number" value={phoneNumber} onChange={evt => changeNumber(evt.target.value)}/>
 		    	<p>Phone Number: +{countryCode || "000"}-{phoneNumber || "-000-0000"}</p>
+			    <p style={{color: "red"}}>{codeError}</p>
 			    <p style={{color: "red"}}>{numberError}</p>
 			    <Input type="email" value={email} label="Email" s={12}  onChange={evt => changeEmail(evt.target.value)} />
 			    <p style={{color: "red"}}>{emailError}</p>
