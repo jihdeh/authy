@@ -6,7 +6,7 @@ const fs = require("fs");
 const AssetsPlugin = require("assets-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-let devtool, loaders;
+var devtool, loaders;
 if (process.env.NODE_ENV === "development") {
   loaders = ["react-hot-loader/webpack", "babel-loader", "babel"];
   devtool = "cheap-module-eval-source-map";
