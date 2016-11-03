@@ -11,7 +11,7 @@ import {
 } from "../homepage-actions";
 import RegisterForm from "../../register/component/register";
 import axios from "axios";
-import {Button} from "react-materialize";
+import {Button, Row} from "react-materialize";
 
 
 const mapStateToProps = (state, props) => ({
@@ -37,10 +37,12 @@ class HomeView extends Component {
 		const profile = Object.assign({}, user.toJS());
 		return (
 			<div>
-				<Button waves="light"><a onClick={this.onLogout}>Logout</a></Button>
-				<p>User home page</p>
-				<p>{profile.email}</p>
-				<p>{profile.username}</p>
+				<Row>
+					<Button waves="light" waves="light" style={{float: "right", backgroundColor: "white", boxShadow: "none"}}><a onClick={this.onLogout}>Logout</a></Button>
+					<p>User home page</p>
+					<p>Email: {profile.email}</p>
+					<p>Your Name: {profile.username}</p>
+				</Row>
 			</div>
 		)
 	}
