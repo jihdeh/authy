@@ -66,15 +66,15 @@ const Login = enhance(({
 	return (
 		<div>
 			<h3>{approvalMsg}</h3>
-			<form onSubmit={submitForm}>
+			<form>
 				<Row>
 			    <Input type="email" value={email} label="Email" s={12}  onChange={evt => onEnterEmail(evt.target.value)} />
 			    <Input type="password" value={password} min="4" label="password" s={12} onChange={evt => onEnterPassword(evt.target.value)} />
-			    <Button waves="light" disabled={email === "" || password === ""}>Login</Button>
+			    <Button waves="light" disabled={email === "" || password === ""} style={{display: "inline-block"}}  onClick={submitForm}>Login</Button>
+					<Button waves="light" waves="light" style={{float: "right", backgroundColor: "white", boxShadow: "none"}}><Link to="/register">Register</Link></Button>
 			    <p>{submitMessage}</p>
 				</Row>
 			</form>
-			<Link to="/register">Register</Link>
 		</div>
 	)
 });

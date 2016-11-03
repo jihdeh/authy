@@ -13,20 +13,10 @@ import ReactTelInput from "react-telephone-input";
 import {Link} from "react-router";
 
 const changeUsername = props => (value) => {
-// onEnterName
 const userName = !validator.isEmpty(value.trim());
 	props.onEnterName(value);
 	return !userName ? props.onUserNameError("Invalid Username") : props.onUserNameError(null);
 };
-
-function handleInputBlur(telNumber, selectedCountry) {
-  console.log('Focus off the ReactTelephoneInput component. Tel number entered is: ', telNumber, ' selected country is: ', selectedCountry);
-}
-
-const handleInputChange = props => (value, telNumber, selectedCountry) => {
-	console.log('input changed. number: ', telNumber, 'selected value: ', value);
-	// props.onEnterNumber(value);
-}
 
 const changeEmail = props => (value) => {
 	const userEmail = validator.isEmail(value.trim()) &&
@@ -40,13 +30,14 @@ const changePassword = props => (value) => {
 	return !userPassword ? props.onPasswordError("Please enter password") : props.onPasswordError(null);
 };
 const changeNumber = props => (value) => {
-	// const userPassword = !validator.isEmpty(value.trim());
+	const userNumber = !validator.isEmpty(value.trim());
 	props.onEnterNumber(value);
-	// return !userPassword ? props.onPasswordError("Please enter password") : props.onPasswordError(null);
+	return !userNumber ? props.onNumberError("Please enter your phone number") : props.onNumberError(null);
 };
 const changeCode = props => (value) => {
+	const userCode = !validator.isEmpty(value.trim());
 	props.onEnterCountryCode(value);
-	// return !userPassword ? props.onPasswordError("Please enter password") : props.onPasswordError(null);
+	return !userCode ? props.onCodeError("Please enter password") : props.onCodeError(null);
 };
 
 const submitForm = props => async event => {
@@ -54,20 +45,27 @@ const submitForm = props => async event => {
 	if(props.emailError || props.usernameError || props.passwordError) {
 		props.onSubmit("Cannot register due to errors in form, please rectify");
 	} else {
-		try {
-			const response = await axios.post("api/register", {
-					username: props.username,
-					email: props.email,
-					countryCode: props.countryCode,
-					phoneNumber: props.phoneNumber,
-					password: props.password
-				});
-			if(response.data && response.status) {
-				window.location = `${window.location.protocol}//${window.location.host}/login`;
-			}
-		} catch(err) {
-			props.onSubmit("Registration not successful, please try a different email");
-		};
+		// try {
+		// 	const response = await axios.post("api/register", {
+		// 			username: props.username,
+		// 			email: props.email,
+		// 			countryCode: props.countryCode,
+		// 			phoneNumber: props.phoneNumber,
+		// 			password: props.password
+		// 		});
+		// 	if(response.data && response.status) {
+		// 		window.location = `${window.location.protocol}//${window.location.host}/login`;
+		// 	}
+		// } catch(err) {
+		// 	props.onSubmit("Registration not successful, please try a different email");
+		// };
+	}
+}
+
+const styles = {
+	topDiv: {
+		width: "60%",
+    margin: "0 auto"
 	}
 }
 
@@ -85,6 +83,8 @@ const enhance = compose(
 	withState("usernameError", "onUserNameError", true),
 	withState("emailError", "onEmailError", true),
 	withState("passwordError", "onPasswordError", true),
+	withState("numberError", "onNumberError", true),
+	withState("codeError", "onCodeError", true),
 	withState("email", "onEnterEmail", ""),
 	withState("password", "onEnterPassword", ""),
 	withState("submitMessage", "onSubmit", ""),
@@ -111,30 +111,37 @@ const Register = enhance(({
 	emailError,
 	usernameError,
 	passwordError,
+	numberError,
+	codeError,
 	countryCode,
 	phoneNumber,
-	onEnterCountryCode,
-	onEnterNumber,
+	changeCode,
+	changeNumber,
 	submitMessage
 }) => {
 	return (
-		<div>
-			<form onSubmit={submitForm}>
+		<div style={styles.topDiv}>
+			<form>
 				<Row>
 			    <Input s={12} label="Name" value={username} onChange={evt => changeUsername(evt.target.value)}/>
 			    <p style={{color: "red"}}>{usernameError}</p>
 
-			    <Input s={4} label="Country Code" value={countryCode} onChange={evt => onEnterCountryCode(evt.target.value)}/>
-			    <Input s={8} label="Phone Number" value={phoneNumber} onChange={evt => onEnterNumber(evt.target.value)}/>
+			    <Input s={4} label="Country Code" value={countryCode} max="3" onChange={evt => changeCode(evt.target.value)}/>
+			    <p style={{color: "red"}}>{codeError}</p>
+			    <Input s={8} label="Phone Number" value={phoneNumber} onChange={evt => changeNumber(evt.target.value)}/>
+		    	<p>Phone Number: +{countryCode || "000"}-{phoneNumber || "-000-0000"}</p>
+			    <p style={{color: "red"}}>{numberError}</p>
 			    <Input type="email" value={email} label="Email" s={12}  onChange={evt => changeEmail(evt.target.value)} />
 			    <p style={{color: "red"}}>{emailError}</p>
 			    <Input type="password" value={password} min="4" label="password" s={12} onChange={evt => changePassword(evt.target.value)} />
 			    <p style={{color: "red"}}>{passwordError}</p>
-			    <Button waves="light">Register</Button>
+			    <Button waves="light" style={{display: "inline-block"}} onClick={submitForm} disabled={
+			    	username =="" || email === "" || password === ""
+			    }>Register</Button>
+					<Button waves="light" style={{float: "right", backgroundColor: "white", boxShadow: "none"}}><Link to="/login">Login</Link></Button>
 			    <p>{submitMessage}</p>
 				</Row>
 			</form>
-			<Link to="/login">Login</Link>
 		</div>
 	)
 });

@@ -11,7 +11,7 @@ export default function frontPage() {
 			render() {
 				return (
 					<div>
-						<Navbar brand="logo" right>
+						<Navbar brand="JP" right>
 						</Navbar>
 						<Child {...this.props}/>
 					</div>
