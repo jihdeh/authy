@@ -7,7 +7,7 @@ import setDisplayName from "recompose/setDisplayName";
 import {Row, Col, Input, Button} from "react-materialize";
 import withState from "recompose/withState";
 import withHandlers from "recompose/withHandlers";
-import {Link, browserHistory} from "react-router";
+import {Link} from "react-router";
 import axios from "axios";
 
 const submitForm = props => async event => {
@@ -15,9 +15,7 @@ const submitForm = props => async event => {
 		try {
 			const response = await axios.post("api/login/session/verify", {code: props.code});
 			if(response.data && response.status === 200) {
-				// window.location = `${window.location.protocol}//${window.location.host}`;
-				const path = `${window.location.protocol}//${window.location.host}`;
-		    browserHistory.push(path);
+				window.location = `${window.location.protocol}//${window.location.host}`;
 			}
 		} catch(err) {
 			props.onSubmit("Error Occured / Invalid Token");

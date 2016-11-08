@@ -58,7 +58,6 @@
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "react-tap-event-plugin": "^1.0.0",
-    "react-telephone-input": "^3.7.3",
     "recompose": "^0.20.2",
     "redux": "^3.6.0",
     "redux-immutable": "^3.0.8",
